@@ -7,7 +7,7 @@
 
 <p>VueJS example App. <a href="https://github.com/douglett/share/tree/master/vuejs1">[view source]</a></p>
 
-<div id="testapp1">
+<div id="testapp1" v-cloak>
 	<input type="text" name="searchFilterBox" v-on:keyup="doSearch" />
 	<table>
 		<!-- pick header names from json data -->
@@ -19,11 +19,33 @@
 	</table>
 </div>
 
+
+<!-- simple styles -->
+<style type="text/css">
+#testapp1 {}
+table {
+	border: 1px solid black;
+	border-collapse: collapse;
+}
+td, th {
+	border: 1px solid black;
+	padding: 0.4em;
+	white-space: nowrap;
+}
+input[name="searchFilterBox"] {
+	margin: 1.5em;
+}
+[v-cloak] > * { display: none; }
+[v-cloak]::before { content: "loading..."; }
+</style>
+
+
+<!-- external scripts -->
 <script src="https://unpkg.com/vue"></script>
 <script type="text/javascript" src="data.js"></script>
 
 
-<!-- vue script -->
+<!-- my vue script -->
 <script type="text/javascript">
 var app2 = new Vue({
 	el: '#testapp1',
@@ -52,24 +74,6 @@ var app2 = new Vue({
 	}
 });
 </script>
-
-
-<!-- simple styles -->
-<style type="text/css">
-#testapp1 {}
-table {
-	border: 1px solid black;
-	border-collapse: collapse;
-}
-td, th {
-	border: 1px solid black;
-	padding: 0.4em;
-	white-space: nowrap;
-}
-input[name="searchFilterBox"] {
-	margin: 1.5em;
-}
-</style>
 
 </body>
 </html>
