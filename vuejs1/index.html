@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Vue test app - doug inman</title>
+</head>
+<body>
+
+<div id="testapp1">
+	<input type="text" name="searchFilterBox" v-on:keyup="doSearch" />
+	<table>
+		<!-- pick header names from json data -->
+		<tr><th v-for="(value, key) in items[0]">{{ key }}</th></tr>
+		<!-- filtered data -->
+		<tr v-for="item in searchFilter">
+			<td v-for="value in item">{{ value }}</td>
+		</tr>
+	</table>
+</div>
+
+<script src="https://unpkg.com/vue"></script>
+<script type="text/javascript" src="data.js"></script>
+
+
+<!-- vue script -->
+<script type="text/javascript">
+var app2 = new Vue({
+	el: '#testapp1',
+	data: {
+		items: testdata.data,  // import test data
+		searchTerm: ""
+	},
+	computed: {
+		searchFilter: function() {
+			var searchTerm = this.searchTerm.toLowerCase();  // case insensitive search term
+			return this.items
+				.filter(function(item) {
+					return ( item.name.toLowerCase().includes(searchTerm) 
+						|| item.sku.toLowerCase().includes(searchTerm) );  // check for substring (case insensitive)
+				})
+				.sort(function(l, r) {
+					return ( l.id - r.id );  // 1 to -1, not true/false
+				});
+		}
+	},
+	methods: {
+		doSearch: function(e) {
+			this.searchTerm = e.target.value;  // get new search string
+			// this.$forceUpdate();  // should update automatically actually
+		}
+	}
+});
+</script>
+
+
+<!-- simple styles -->
+<style type="text/css">
+#testapp1 {}
+table {
+	border: 1px solid black;
+	border-collapse: collapse;
+}
+td, th {
+	border: 1px solid black;
+	padding: 0.4em;
+	white-space: nowrap;
+}
+input[name="searchFilterBox"] {
+	margin: 1.5em;
+}
+</style>
+
+</body>
+</html>
