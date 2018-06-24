@@ -4,11 +4,11 @@ this.addEventListener('install', function(e) {
 	// e.skipWaiting();  // activate straight away
 	e.waitUntil(caches.open('v1').then(cache => {
 		return cache.addAll([
-			'/',
-			'/index.html',
-			'/test.jpg',
-			'/test2.png',
-			'/test3.png'
+			'.',
+			'index.html',
+			'test.jpg',
+			'test2.png',
+			'test3.png'
 		]);
 	}).then(e => {
 		// make service worker activate *before* the above cached files have finished loading
@@ -28,7 +28,7 @@ this.addEventListener('fetch', function(e) {
 		// rewrite images
 		if ((/test/).test(response.url)) {
 			console.log("Cache rewrite on:", response.url);
-			return caches.match('/test3.png');
+			return caches.match('test3.png');
 		}
 		// cache hit
 		if (response !== undefined) {
@@ -37,6 +37,6 @@ this.addEventListener('fetch', function(e) {
 		}
 		// cache miss
 		console.log("Cache miss:", e.request);
-		return caches.match('/test2.png');
+		return caches.match('test2.png');
 	}));
 });
