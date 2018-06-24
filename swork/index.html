@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>swork</title>
+</head>
+<body onload="main()">
+
+swork
+<p/>
+<button onclick="getImage()">getImage()</button>
+
+<script type="text/javascript">
+async function main() {
+	try {
+		if (!navigator.serviceWorker) throw Error("service worker API missing");
+		if (!navigator.serviceWorker.controller) throw Error("force-refresh: service worker bypassed");
+		let reg = await navigator.serviceWorker.register('/swork.js', {scope: '/'});
+		// registration worked
+		// console.log('Registration succeeded. Scope is ' + reg.scope);
+		if (reg.installing) {
+			console.log('Service worker installing');
+		}
+		else if (reg.waiting) {
+			console.log('Service worker installed');
+		}
+		else if (reg.active) {
+			console.log('Service worker active');
+		}
+	}
+	catch (e) {
+		// registration failed
+		console.log('Registration failed with:', e);
+	}
+}
+
+async function getImage() {
+	console.log("Adding image...");
+	// var img = await fetch('/test.jpg');
+	// console.log(img);
+	var img = document.createElement("img");
+	img.src = "/test.jpg";
+	document.body.appendChild(img);
+}
+</script>
+
+</body>
+</html>
