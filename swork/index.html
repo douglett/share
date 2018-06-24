@@ -14,7 +14,7 @@ async function main() {
 	try {
 		if (!navigator.serviceWorker) throw Error("service worker API missing");
 		if (!navigator.serviceWorker.controller) console.log("force-refresh: service worker bypassed");
-		let reg = await navigator.serviceWorker.register('swork.js', {scope: '/'});
+		let reg = await navigator.serviceWorker.register('swork.js'); //, {scope: '/'});
 		// registration worked
 		// console.log('Registration succeeded. Scope is ' + reg.scope);
 		if (reg.installing) {
